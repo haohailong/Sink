@@ -27,7 +27,7 @@ defineRouteMeta({
               slug: { type: 'string', description: 'Custom slug (auto-generated if not provided)' },
               comment: { type: 'string', description: 'Optional comment' },
               expiration: { type: 'integer', description: 'Expiration timestamp (unix seconds)' },
-              title: { type: 'string', description: 'Custom title for link preview' },
+              title: { type: 'string', description: 'Custom title for link preview; when omitted, fetch og:title or the page title (best effort)' },
               description: { type: 'string', description: 'Custom description for link preview' },
               image: { type: 'string', description: 'Custom image for link preview' },
               apple: { type: 'string', description: 'Apple App Store redirect URL' },
@@ -50,6 +50,8 @@ export default eventHandler(async (event) => {
   const link = await readValidatedBody(event, CreateLinkSchema.parse)
 
   await prepareIncomingLink(event, link)
+
+  await populateLinkTitle(link)
 
   await hashLinkPasswordForCreate(link)
 
