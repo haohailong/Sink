@@ -36,6 +36,14 @@ describe('automatic link titles', () => {
     expect(await fetchLinkTitle('https://example.com')).toBe(expected)
   })
 
+  it('uses redirect handling supported by Cloudflare Workers for DNS lookups', async () => {
+    const network = mockNetwork(() => html('<title>Found</title>'))
+    expect(await fetchLinkTitle('https://example.com')).toBe('Found')
+    const dnsCalls = network.mock.calls.filter(call => new URL(String(call[0])).hostname === 'cloudflare-dns.com')
+    expect(dnsCalls).toHaveLength(2)
+    expect(dnsCalls.every(call => (call[1] as RequestInit).redirect === 'manual')).toBe(true)
+  })
+
   it('decodes multibyte text and tags split across chunks, then cancels immediately', async () => {
     const cancel = vi.fn()
     const bytes = new TextEncoder().encode('<meta property="og:title" content="中文 &amp; title">')

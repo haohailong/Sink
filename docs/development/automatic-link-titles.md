@@ -8,7 +8,7 @@
 - Parse HTML incrementally, decoding entities and streamed text. A completed `<title>` is provisional until an OpenGraph title is found, `</head>` / `<body>` is encountered, the stream ends, or the 64 KiB decoded response-byte budget is exhausted.
 - Stop reading and cancel the response stream as soon as an OpenGraph title or head boundary is found. Never fetch scripts, images, CSS, or other subresources. Bytes already buffered by the network may exceed the application limit; the parser receives at most 64 KiB.
 - Normalize whitespace and cap titles at the existing 256 UTF-16 code-unit limit without splitting surrogate pairs. HTTP charset declarations are supported; otherwise UTF-8 is used. JavaScript-only titles and titles outside the bounded prefix may be unavailable.
-- One 3-second deadline covers DNS, at most three redirects, headers, and body reads. No retry. Errors, timeouts, non-HTML responses, and missing titles produce an empty title without preventing creation.
+- One 6-second deadline covers DNS, at most three redirects, headers, and body reads. No retry. Errors, timeouts, non-HTML responses, and missing titles produce an empty title without preventing creation.
 
 ## SSRF boundary
 

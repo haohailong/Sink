@@ -2,7 +2,7 @@ import { Parser } from 'htmlparser2'
 import ipaddr from 'ipaddr.js'
 
 export const TITLE_MAX_BYTES = 64 * 1024
-export const TITLE_TIMEOUT_MS = 3000
+export const TITLE_TIMEOUT_MS = 6000
 const MAX_REDIRECTS = 3
 const DNS_MAX_BYTES = 16 * 1024
 
@@ -52,7 +52,9 @@ async function publicDNS(url: URL, signal: AbortSignal): Promise<void> {
     dnsURL.searchParams.set('type', type)
     const response = await fetch(dnsURL, {
       headers: { accept: 'application/dns-json' },
-      redirect: 'error',
+      // Cloudflare Workers only supports "follow" and "manual". Keep DNS
+      // redirects visible so an unexpected redirect fails the response checks.
+      redirect: 'manual',
       signal,
     })
     if (!response.ok || !response.body) {
