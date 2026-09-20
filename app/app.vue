@@ -35,16 +35,16 @@ useHead(() => ({
   link: [
     {
       rel: 'canonical',
-      href: computed(() => `https://sink.cool${route.path}`),
+      href: computed(() => `https://h.olo.la${route.path}`),
     },
     {
       rel: 'icon',
       type: 'image/png',
-      href: '/icon-192.png',
+      href: '/hub/favicon.png',
     },
     {
       rel: 'apple-touch-icon',
-      href: '/apple-touch-icon.png',
+      href: '/hub/favicon.png',
     },
   ],
 }))
