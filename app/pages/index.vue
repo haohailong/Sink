@@ -299,9 +299,9 @@ useHead({
 }
 
 .destination-art-studio img {
-  width: 112%;
-  height: 112%;
-  filter: brightness(1.24) saturate(0.78);
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.98) saturate(0.84);
 }
 
 .destination-art-github :deep(svg) {
@@ -337,7 +337,7 @@ useHead({
 }
 
 .destination-card:hover .destination-art-studio img {
-  filter: brightness(1.38) saturate(0.9);
+  filter: brightness(1.08) saturate(0.96);
 }
 
 .destination-card:hover .destination-label {
