@@ -141,6 +141,29 @@
     "create_failed": "링크 생성에 실패했습니다",
     "ai_slug_failed": "AI 슬러그 생성에 실패했습니다",
     "ai_og_failed": "AI OpenGraph 생성에 실패했습니다",
-    "ai_og_success": "AI OpenGraph가 성공적으로 생성되었습니다"
+    "ai_og_success": "AI OpenGraph가 성공적으로 생성되었습니다",
+    "bulk": {
+      "select_link": "{slug} 선택",
+      "select_all": "불러온 링크 모두 선택",
+      "selected_count": "{count}개 선택됨",
+      "clear": "선택 해제",
+      "edit": "선택 항목 편집",
+      "delete": "선택 항목 삭제",
+      "edit_title": "선택한 링크 {count}개 편집",
+      "edit_description": "선택한 링크에 같은 값을 적용합니다.",
+      "edit_hint": "체크한 필드만 변경됩니다. 체크한 필드를 비워 두면 선택한 모든 링크에서 해당 필드가 지워집니다.",
+      "change_field": "{field} 변경",
+      "no_fields": "변경할 필드를 하나 이상 선택하세요.",
+      "save": "선택한 링크 업데이트",
+      "update_success": "링크 {count}개 업데이트됨",
+      "update_partial": "{success}개 업데이트됨. {failed}개는 실패하여 선택된 상태로 남았습니다.",
+      "update_failed": "선택한 링크 {count}개를 업데이트하지 못했습니다.",
+      "delete_title": "선택한 링크 {count}개를 삭제할까요?",
+      "delete_description": "선택한 모든 링크가 영구적으로 삭제되며 되돌릴 수 없습니다.",
+      "delete_action": "링크 {count}개 삭제",
+      "delete_success": "링크 {count}개 삭제됨",
+      "delete_partial": "{success}개 삭제됨. {failed}개는 실패하여 선택된 상태로 남았습니다.",
+      "delete_failed": "선택한 링크 {count}개를 삭제하지 못했습니다."
+    }
   }
 }

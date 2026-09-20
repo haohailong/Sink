@@ -141,6 +141,29 @@
     "create_failed": "Falha ao criar link",
     "ai_slug_failed": "Falha ao gerar slug via IA",
     "ai_og_failed": "Falha ao gerar OpenGraph da IA",
-    "ai_og_success": "OpenGraph da IA gerado com sucesso"
+    "ai_og_success": "OpenGraph da IA gerado com sucesso",
+    "bulk": {
+      "select_link": "Selecionar {slug}",
+      "select_all": "Selecionar todos os links carregados",
+      "selected_count": "{count} selecionados",
+      "clear": "Limpar seleção",
+      "edit": "Editar selecionados",
+      "delete": "Excluir selecionados",
+      "edit_title": "Editar {count} links selecionados",
+      "edit_description": "Aplicar os mesmos valores aos links selecionados.",
+      "edit_hint": "Somente os campos marcados serão alterados. Um campo marcado e vazio será removido de todos os links selecionados.",
+      "change_field": "Alterar {field}",
+      "no_fields": "Escolha pelo menos um campo para alterar.",
+      "save": "Atualizar links selecionados",
+      "update_success": "{count} links atualizados",
+      "update_partial": "{success} links atualizados; {failed} falharam e continuam selecionados.",
+      "update_failed": "Falha ao atualizar {count} links selecionados.",
+      "delete_title": "Excluir {count} links selecionados?",
+      "delete_description": "Todos os links selecionados serão excluídos permanentemente. Esta ação não pode ser desfeita.",
+      "delete_action": "Excluir {count} links",
+      "delete_success": "{count} links excluídos",
+      "delete_partial": "{success} links excluídos; {failed} falharam e continuam selecionados.",
+      "delete_failed": "Falha ao excluir {count} links selecionados."
+    }
   }
 }

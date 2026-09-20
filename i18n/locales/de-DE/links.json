@@ -141,6 +141,29 @@
     "create_failed": "Link konnte nicht erstellt werden",
     "ai_slug_failed": "KI-Slug konnte nicht generiert werden",
     "ai_og_failed": "Fehler beim Generieren des KI-OpenGraph",
-    "ai_og_success": "KI-OpenGraph erfolgreich generiert"
+    "ai_og_success": "KI-OpenGraph erfolgreich generiert",
+    "bulk": {
+      "select_link": "{slug} auswählen",
+      "select_all": "Alle geladenen Links auswählen",
+      "selected_count": "{count} ausgewählt",
+      "clear": "Auswahl aufheben",
+      "edit": "Auswahl bearbeiten",
+      "delete": "Auswahl löschen",
+      "edit_title": "{count} ausgewählte Links bearbeiten",
+      "edit_description": "Dieselben Werte auf die ausgewählten Links anwenden.",
+      "edit_hint": "Nur markierte Felder werden geändert. Ein markiertes, leeres Feld wird bei allen ausgewählten Links gelöscht.",
+      "change_field": "{field} ändern",
+      "no_fields": "Wähle mindestens ein Feld aus.",
+      "save": "Ausgewählte Links aktualisieren",
+      "update_success": "{count} Links aktualisiert",
+      "update_partial": "{success} Links aktualisiert; {failed} fehlgeschlagen und weiterhin ausgewählt.",
+      "update_failed": "{count} ausgewählte Links konnten nicht aktualisiert werden.",
+      "delete_title": "{count} ausgewählte Links löschen?",
+      "delete_description": "Alle ausgewählten Links werden dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden.",
+      "delete_action": "{count} Links löschen",
+      "delete_success": "{count} Links gelöscht",
+      "delete_partial": "{success} Links gelöscht; {failed} fehlgeschlagen und weiterhin ausgewählt.",
+      "delete_failed": "{count} ausgewählte Links konnten nicht gelöscht werden."
+    }
   }
 }

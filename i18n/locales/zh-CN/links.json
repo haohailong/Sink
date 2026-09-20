@@ -141,6 +141,29 @@
     "create_failed": "创建链接失败",
     "ai_slug_failed": "AI 生成短链失败",
     "ai_og_failed": "生成 AI OpenGraph 失败",
-    "ai_og_success": "成功生成 AI OpenGraph"
+    "ai_og_success": "成功生成 AI OpenGraph",
+    "bulk": {
+      "select_link": "选择 {slug}",
+      "select_all": "全选已加载的链接",
+      "selected_count": "已选择 {count} 条",
+      "clear": "取消全选",
+      "edit": "批量编辑",
+      "delete": "批量删除",
+      "edit_title": "编辑选中的 {count} 条链接",
+      "edit_description": "将相同内容应用到选中的链接。",
+      "edit_hint": "只有勾选的字段会被修改。勾选后留空，会清除所有选中链接的对应字段。",
+      "change_field": "修改{field}",
+      "no_fields": "请至少选择一个要修改的字段。",
+      "save": "更新选中的链接",
+      "update_success": "已更新 {count} 条链接",
+      "update_partial": "已更新 {success} 条；{failed} 条失败并保持选中。",
+      "update_failed": "选中的 {count} 条链接更新失败。",
+      "delete_title": "删除选中的 {count} 条链接？",
+      "delete_description": "此操作将永久删除所有选中的链接，且无法撤销。",
+      "delete_action": "删除 {count} 条链接",
+      "delete_success": "已删除 {count} 条链接",
+      "delete_partial": "已删除 {success} 条；{failed} 条失败并保持选中。",
+      "delete_failed": "选中的 {count} 条链接删除失败。"
+    }
   }
 }

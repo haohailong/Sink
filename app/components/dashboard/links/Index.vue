@@ -1,18 +1,28 @@
 <script setup lang="ts">
 import type { LinkUpdateType } from '@/types'
-import type { DashboardLink, DashboardLinkListResponse } from '@/types/dashboard-links'
+import type { DashboardLink, DashboardLinkBulkPatch, DashboardLinkBulkUpdateResponse, DashboardLinkListResponse } from '@/types/dashboard-links'
 import { AlertCircle, Inbox, LoaderCircle } from '@lucide/vue'
 import { useInfiniteScroll } from '@vueuse/core'
+import { toast } from 'vue-sonner'
 
 const linksStore = useDashboardLinksStore()
+const linksSearchStore = useDashboardLinksSearchStore()
+const { t } = useI18n()
 
 const links = ref<DashboardLink[]>([])
+const selectedSlugs = ref<string[]>([])
 const listComplete = ref(false)
 const listError = ref(false)
 const listLoading = ref(false)
+const bulkProcessing = shallowRef(false)
+const bulkEditOpen = shallowRef(false)
+const bulkDeleteOpen = shallowRef(false)
 const limit = 24
 let cursor = ''
 let requestGeneration = 0
+
+const selectedSlugSet = computed(() => new Set(selectedSlugs.value))
+const selectedLinks = computed(() => links.value.filter(link => selectedSlugSet.value.has(link.slug)))
 
 const { countersMap, counterErrorIds, fetchCounters, resetCounters } = useLinkCounters()
 provide(LINKS_COUNTERS_MAP_KEY, countersMap)
@@ -72,6 +82,9 @@ async function getLinks() {
 function resetAndLoad() {
   requestGeneration++
   links.value = []
+  selectedSlugs.value = []
+  bulkEditOpen.value = false
+  bulkDeleteOpen.value = false
   resetCounters()
   cursor = ''
   listComplete.value = false
@@ -106,15 +119,19 @@ function matchesCurrentFilters(link: DashboardLink) {
 function updateLinkList(link: DashboardLink, type: LinkUpdateType) {
   if (type === 'edit') {
     const index = links.value.findIndex(l => l.slug === link.slug)
-    if (index >= 0 && matchesCurrentFilters(link))
+    if (index >= 0 && matchesCurrentFilters(link)) {
       links.value[index] = link
-    else if (index >= 0)
+    }
+    else if (index >= 0) {
       links.value.splice(index, 1)
+      selectedSlugs.value = selectedSlugs.value.filter(slug => slug !== link.slug)
+    }
   }
   else if (type === 'delete') {
     const index = links.value.findIndex(l => l.slug === link.slug)
     if (index >= 0)
       links.value.splice(index, 1)
+    selectedSlugs.value = selectedSlugs.value.filter(slug => slug !== link.slug)
   }
   else {
     if (!matchesCurrentFilters(link))
@@ -129,26 +146,147 @@ function updateLinkList(link: DashboardLink, type: LinkUpdateType) {
   }
 }
 
+function updateSelection(slug: string, selected: boolean) {
+  if (selected) {
+    if (!selectedSlugSet.value.has(slug))
+      selectedSlugs.value = [...selectedSlugs.value, slug]
+  }
+  else {
+    selectedSlugs.value = selectedSlugs.value.filter(item => item !== slug)
+  }
+}
+
+function toggleAll(selected: boolean) {
+  selectedSlugs.value = selected ? links.value.map(link => link.slug) : []
+}
+
+function handleBulkResults(results: BulkOperationResult<DashboardLink>[], operation: 'update' | 'delete') {
+  const failed = results.filter(result => result.error)
+  const successCount = results.length - failed.length
+  selectedSlugs.value = failed.map(result => result.item.slug)
+
+  if (failed.length === 0) {
+    toast(t(`links.bulk.${operation}_success`, { count: successCount }))
+    return true
+  }
+
+  console.error(`Bulk link ${operation} failed`, failed.map(result => ({
+    slug: result.item.slug,
+    error: result.error,
+  })))
+
+  if (successCount > 0) {
+    toast.error(t(`links.bulk.${operation}_partial`, {
+      success: successCount,
+      failed: failed.length,
+    }))
+  }
+  else {
+    toast.error(t(`links.bulk.${operation}_failed`, { count: failed.length }))
+  }
+  return false
+}
+
+async function bulkEdit(patch: DashboardLinkBulkPatch) {
+  if (bulkProcessing.value || selectedLinks.value.length === 0)
+    return
+
+  const targets = [...selectedLinks.value]
+  bulkProcessing.value = true
+  try {
+    const results: BulkOperationResult<DashboardLink>[] = []
+    for (const chunk of chunkItems(targets, 100)) {
+      try {
+        const response = await useAPI<DashboardLinkBulkUpdateResponse>('/api/link/bulk-edit', {
+          method: 'PUT',
+          body: {
+            slugs: chunk.map(link => link.slug),
+            changes: createBulkEditChanges(patch),
+          },
+        })
+        const updatedSlugs = new Set(response.links.map(link => link.slug))
+        const failedBySlug = new Map(response.failed.map(failure => [failure.slug, failure.error]))
+
+        for (const updatedLink of response.links) {
+          linksSearchStore.syncLink(updatedLink, 'edit')
+          linksStore.notifyLinkUpdate(updatedLink, 'edit')
+        }
+        for (const link of chunk) {
+          results.push(updatedSlugs.has(link.slug)
+            ? { item: link }
+            : { item: link, error: failedBySlug.get(link.slug) ?? 'missing_result' })
+        }
+      }
+      catch (error) {
+        results.push(...chunk.map(item => ({ item, error })))
+      }
+    }
+
+    if (handleBulkResults(results, 'update'))
+      bulkEditOpen.value = false
+  }
+  finally {
+    bulkProcessing.value = false
+  }
+}
+
+async function bulkDelete() {
+  if (bulkProcessing.value || selectedLinks.value.length === 0)
+    return
+
+  const targets = [...selectedLinks.value]
+  bulkProcessing.value = true
+  try {
+    const results = await runBulkOperation(targets, async (link) => {
+      await useAPI('/api/link/delete', {
+        method: 'POST',
+        body: { slug: link.slug },
+      })
+      linksSearchStore.syncLink(link, 'delete')
+      linksStore.notifyLinkUpdate(link, 'delete')
+    })
+
+    if (handleBulkResults(results, 'delete'))
+      bulkDeleteOpen.value = false
+  }
+  finally {
+    bulkProcessing.value = false
+  }
+}
+
 linksStore.onLinkUpdate(({ link, type }) => {
   updateLinkList(link, type)
 })
 </script>
 
 <template>
-  <section
-    v-if="links.length"
-    class="
-      grid grid-cols-1 gap-4
-      md:grid-cols-2
-      lg:grid-cols-3
-    "
-  >
-    <DashboardLinksLink
-      v-for="link in links"
-      :key="link.slug"
-      :link="link"
+  <template v-if="links.length">
+    <DashboardLinksBulkActions
+      class="mb-4"
+      :total-count="links.length"
+      :selected-count="selectedSlugs.length"
+      :processing="bulkProcessing"
+      @toggle-all="toggleAll"
+      @clear="selectedSlugs = []"
+      @edit="bulkEditOpen = true"
+      @delete="bulkDeleteOpen = true"
     />
-  </section>
+    <section
+      class="
+        grid grid-cols-1 gap-4
+        md:grid-cols-2
+        lg:grid-cols-3
+      "
+    >
+      <DashboardLinksLink
+        v-for="link in links"
+        :key="link.slug"
+        :link="link"
+        :selected="selectedSlugSet.has(link.slug)"
+        @update:selected="updateSelection(link.slug, $event)"
+      />
+    </section>
+  </template>
   <section
     v-else-if="listLoading"
     class="
@@ -202,4 +340,17 @@ linksStore.onLinkUpdate(({ link, type }) => {
       </Button>
     </AlertDescription>
   </Alert>
+
+  <DashboardLinksBulkEditModal
+    v-model:open="bulkEditOpen"
+    :count="selectedLinks.length"
+    :processing="bulkProcessing"
+    @submit="bulkEdit"
+  />
+  <DashboardLinksBulkDeleteDialog
+    v-model:open="bulkDeleteOpen"
+    :count="selectedLinks.length"
+    :processing="bulkProcessing"
+    @confirm="bulkDelete"
+  />
 </template>

@@ -141,6 +141,29 @@
     "create_failed": "創建連結失敗",
     "ai_slug_failed": "AI 生成短連結失敗",
     "ai_og_failed": "生成 AI OpenGraph 失敗",
-    "ai_og_success": "成功生成 AI OpenGraph"
+    "ai_og_success": "成功生成 AI OpenGraph",
+    "bulk": {
+      "select_link": "選取 {slug}",
+      "select_all": "全選已載入的連結",
+      "selected_count": "已選取 {count} 筆",
+      "clear": "取消全選",
+      "edit": "批次編輯",
+      "delete": "批次刪除",
+      "edit_title": "編輯選取的 {count} 筆連結",
+      "edit_description": "將相同內容套用到選取的連結。",
+      "edit_hint": "只有勾選的欄位會被修改。勾選後留空，會清除所有選取連結的對應欄位。",
+      "change_field": "修改{field}",
+      "no_fields": "請至少選擇一個要修改的欄位。",
+      "save": "更新選取的連結",
+      "update_success": "已更新 {count} 筆連結",
+      "update_partial": "已更新 {success} 筆；{failed} 筆失敗並保持選取。",
+      "update_failed": "選取的 {count} 筆連結更新失敗。",
+      "delete_title": "刪除選取的 {count} 筆連結？",
+      "delete_description": "此操作將永久刪除所有選取的連結，且無法復原。",
+      "delete_action": "刪除 {count} 筆連結",
+      "delete_success": "已刪除 {count} 筆連結",
+      "delete_partial": "已刪除 {success} 筆；{failed} 筆失敗並保持選取。",
+      "delete_failed": "選取的 {count} 筆連結刪除失敗。"
+    }
   }
 }

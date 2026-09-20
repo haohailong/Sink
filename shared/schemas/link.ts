@@ -17,7 +17,7 @@ const GeoSchema = z.preprocess((value) => {
   )
 }, z.record(z.string().trim().regex(/^[A-Z]{2}$/), z.string().trim().url().max(2048)))
 
-const TagsSchema = z.preprocess((value) => {
+export const TagsSchema = z.preprocess((value) => {
   if (!Array.isArray(value))
     return value
   return [...new Set(value.map(tag => typeof tag === 'string' ? tag.trim().toLowerCase() : tag))]

@@ -141,6 +141,29 @@
     "create_failed": "Échec de la création du lien",
     "ai_slug_failed": "Échec de la génération du slug IA",
     "ai_og_failed": "Échec de la génération de l'OpenGraph IA",
-    "ai_og_success": "OpenGraph IA généré avec succès"
+    "ai_og_success": "OpenGraph IA généré avec succès",
+    "bulk": {
+      "select_link": "Sélectionner {slug}",
+      "select_all": "Sélectionner tous les liens chargés",
+      "selected_count": "{count} sélectionnés",
+      "clear": "Effacer la sélection",
+      "edit": "Modifier la sélection",
+      "delete": "Supprimer la sélection",
+      "edit_title": "Modifier {count} liens sélectionnés",
+      "edit_description": "Appliquer les mêmes valeurs aux liens sélectionnés.",
+      "edit_hint": "Seuls les champs cochés seront modifiés. Un champ coché laissé vide sera effacé sur tous les liens sélectionnés.",
+      "change_field": "Modifier {field}",
+      "no_fields": "Choisissez au moins un champ à modifier.",
+      "save": "Mettre à jour les liens",
+      "update_success": "{count} liens mis à jour",
+      "update_partial": "{success} liens mis à jour ; {failed} ont échoué et restent sélectionnés.",
+      "update_failed": "Échec de la mise à jour de {count} liens.",
+      "delete_title": "Supprimer {count} liens sélectionnés ?",
+      "delete_description": "Tous les liens sélectionnés seront définitivement supprimés. Cette action est irréversible.",
+      "delete_action": "Supprimer {count} liens",
+      "delete_success": "{count} liens supprimés",
+      "delete_partial": "{success} liens supprimés ; {failed} ont échoué et restent sélectionnés.",
+      "delete_failed": "Échec de la suppression de {count} liens."
+    }
   }
 }

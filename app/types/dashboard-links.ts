@@ -6,6 +6,20 @@ export type DashboardLink = Link & {
   tags?: string[]
 }
 
+export type DashboardLinkBulkPatch = Partial<Pick<DashboardLink, 'comment' | 'tags' | 'title' | 'description'>>
+
+export type DashboardLinkBulkChanges = Partial<{
+  comment: string | null
+  tags: string[]
+  title: string | null
+  description: string | null
+}>
+
+export interface DashboardLinkBulkUpdateResponse {
+  links: DashboardLink[]
+  failed: { slug: string, error: string }[]
+}
+
 export type DashboardLinkFormData = Omit<LinkFormData, 'tags'> & {
   tags: string[]
 }

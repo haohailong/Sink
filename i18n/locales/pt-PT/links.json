@@ -141,6 +141,29 @@
     "create_failed": "Falha ao criar link",
     "ai_slug_failed": "Falha ao gerar slug via IA",
     "ai_og_failed": "Falha ao gerar OpenGraph da IA",
-    "ai_og_success": "OpenGraph da IA gerado com sucesso"
+    "ai_og_success": "OpenGraph da IA gerado com sucesso",
+    "bulk": {
+      "select_link": "Selecionar {slug}",
+      "select_all": "Selecionar todas as ligações carregadas",
+      "selected_count": "{count} selecionadas",
+      "clear": "Limpar seleção",
+      "edit": "Editar selecionadas",
+      "delete": "Eliminar selecionadas",
+      "edit_title": "Editar {count} ligações selecionadas",
+      "edit_description": "Aplicar os mesmos valores às ligações selecionadas.",
+      "edit_hint": "Apenas os campos assinalados serão alterados. Um campo assinalado e vazio será removido de todas as ligações selecionadas.",
+      "change_field": "Alterar {field}",
+      "no_fields": "Escolha pelo menos um campo para alterar.",
+      "save": "Atualizar ligações selecionadas",
+      "update_success": "{count} ligações atualizadas",
+      "update_partial": "{success} ligações atualizadas; {failed} falharam e continuam selecionadas.",
+      "update_failed": "Falha ao atualizar {count} ligações selecionadas.",
+      "delete_title": "Eliminar {count} ligações selecionadas?",
+      "delete_description": "Todas as ligações selecionadas serão eliminadas permanentemente. Esta ação não pode ser anulada.",
+      "delete_action": "Eliminar {count} ligações",
+      "delete_success": "{count} ligações eliminadas",
+      "delete_partial": "{success} ligações eliminadas; {failed} falharam e continuam selecionadas.",
+      "delete_failed": "Falha ao eliminar {count} ligações selecionadas."
+    }
   }
 }

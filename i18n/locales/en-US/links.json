@@ -141,6 +141,29 @@
     "create_failed": "Failed to create link",
     "ai_slug_failed": "Failed to generate AI slug",
     "ai_og_failed": "Failed to generate AI OpenGraph",
-    "ai_og_success": "AI OpenGraph generated successfully"
+    "ai_og_success": "AI OpenGraph generated successfully",
+    "bulk": {
+      "select_link": "Select {slug}",
+      "select_all": "Select all loaded links",
+      "selected_count": "{count} selected",
+      "clear": "Clear selection",
+      "edit": "Edit selected",
+      "delete": "Delete selected",
+      "edit_title": "Edit {count} selected links",
+      "edit_description": "Apply the same values to the selected links.",
+      "edit_hint": "Only checked fields will change. A checked field left empty clears that field on every selected link.",
+      "change_field": "Change {field}",
+      "no_fields": "Choose at least one field to change.",
+      "save": "Update selected links",
+      "update_success": "Updated {count} links",
+      "update_partial": "Updated {success} links; {failed} failed and remain selected.",
+      "update_failed": "Failed to update {count} selected links.",
+      "delete_title": "Delete {count} selected links?",
+      "delete_description": "This permanently deletes all selected links and cannot be undone.",
+      "delete_action": "Delete {count} links",
+      "delete_success": "Deleted {count} links",
+      "delete_partial": "Deleted {success} links; {failed} failed and remain selected.",
+      "delete_failed": "Failed to delete {count} selected links."
+    }
   }
 }

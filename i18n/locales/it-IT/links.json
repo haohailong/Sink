@@ -141,6 +141,29 @@
     "create_failed": "Creazione link fallita",
     "ai_slug_failed": "Generazione slug IA fallita",
     "ai_og_failed": "Impossibile generare l'OpenGraph AI",
-    "ai_og_success": "OpenGraph AI generato con successo"
+    "ai_og_success": "OpenGraph AI generato con successo",
+    "bulk": {
+      "select_link": "Seleziona {slug}",
+      "select_all": "Seleziona tutti i link caricati",
+      "selected_count": "{count} selezionati",
+      "clear": "Cancella selezione",
+      "edit": "Modifica selezionati",
+      "delete": "Elimina selezionati",
+      "edit_title": "Modifica {count} link selezionati",
+      "edit_description": "Applica gli stessi valori ai link selezionati.",
+      "edit_hint": "Verranno modificati solo i campi selezionati. Un campo selezionato e vuoto verrà cancellato da tutti i link selezionati.",
+      "change_field": "Modifica {field}",
+      "no_fields": "Seleziona almeno un campo da modificare.",
+      "save": "Aggiorna i link selezionati",
+      "update_success": "{count} link aggiornati",
+      "update_partial": "{success} link aggiornati; {failed} non riusciti e ancora selezionati.",
+      "update_failed": "Impossibile aggiornare {count} link selezionati.",
+      "delete_title": "Eliminare {count} link selezionati?",
+      "delete_description": "Tutti i link selezionati verranno eliminati definitivamente. L'azione non può essere annullata.",
+      "delete_action": "Elimina {count} link",
+      "delete_success": "{count} link eliminati",
+      "delete_partial": "{success} link eliminati; {failed} non riusciti e ancora selezionati.",
+      "delete_failed": "Impossibile eliminare {count} link selezionati."
+    }
   }
 }

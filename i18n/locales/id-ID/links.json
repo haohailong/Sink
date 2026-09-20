@@ -141,6 +141,29 @@
     "create_failed": "Gagal membuat tautan",
     "ai_slug_failed": "Gagal membuat slug AI",
     "ai_og_failed": "Gagal membuat OpenGraph AI",
-    "ai_og_success": "OpenGraph AI berhasil dibuat"
+    "ai_og_success": "OpenGraph AI berhasil dibuat",
+    "bulk": {
+      "select_link": "Pilih {slug}",
+      "select_all": "Pilih semua tautan yang dimuat",
+      "selected_count": "{count} dipilih",
+      "clear": "Hapus pilihan",
+      "edit": "Edit yang dipilih",
+      "delete": "Hapus yang dipilih",
+      "edit_title": "Edit {count} tautan yang dipilih",
+      "edit_description": "Terapkan nilai yang sama ke tautan yang dipilih.",
+      "edit_hint": "Hanya bidang yang dicentang yang berubah. Bidang yang dicentang dan dibiarkan kosong akan dihapus dari semua tautan terpilih.",
+      "change_field": "Ubah {field}",
+      "no_fields": "Pilih setidaknya satu bidang untuk diubah.",
+      "save": "Perbarui tautan terpilih",
+      "update_success": "{count} tautan diperbarui",
+      "update_partial": "{success} tautan diperbarui; {failed} gagal dan tetap dipilih.",
+      "update_failed": "Gagal memperbarui {count} tautan terpilih.",
+      "delete_title": "Hapus {count} tautan terpilih?",
+      "delete_description": "Semua tautan terpilih akan dihapus permanen dan tidak dapat dipulihkan.",
+      "delete_action": "Hapus {count} tautan",
+      "delete_success": "{count} tautan dihapus",
+      "delete_partial": "{success} tautan dihapus; {failed} gagal dan tetap dipilih.",
+      "delete_failed": "Gagal menghapus {count} tautan terpilih."
+    }
   }
 }

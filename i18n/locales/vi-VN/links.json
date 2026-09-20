@@ -141,6 +141,29 @@
     "create_failed": "Tạo liên kết thất bại",
     "ai_slug_failed": "Tạo slug AI thất bại",
     "ai_og_failed": "Không thể tạo AI OpenGraph",
-    "ai_og_success": "Tạo AI OpenGraph thành công"
+    "ai_og_success": "Tạo AI OpenGraph thành công",
+    "bulk": {
+      "select_link": "Chọn {slug}",
+      "select_all": "Chọn tất cả liên kết đã tải",
+      "selected_count": "Đã chọn {count}",
+      "clear": "Bỏ chọn",
+      "edit": "Sửa mục đã chọn",
+      "delete": "Xóa mục đã chọn",
+      "edit_title": "Sửa {count} liên kết đã chọn",
+      "edit_description": "Áp dụng cùng giá trị cho các liên kết đã chọn.",
+      "edit_hint": "Chỉ các trường được đánh dấu mới thay đổi. Trường được đánh dấu nhưng để trống sẽ bị xóa khỏi tất cả liên kết đã chọn.",
+      "change_field": "Thay đổi {field}",
+      "no_fields": "Chọn ít nhất một trường để thay đổi.",
+      "save": "Cập nhật liên kết đã chọn",
+      "update_success": "Đã cập nhật {count} liên kết",
+      "update_partial": "Đã cập nhật {success} liên kết; {failed} liên kết lỗi và vẫn được chọn.",
+      "update_failed": "Không thể cập nhật {count} liên kết đã chọn.",
+      "delete_title": "Xóa {count} liên kết đã chọn?",
+      "delete_description": "Tất cả liên kết đã chọn sẽ bị xóa vĩnh viễn và không thể hoàn tác.",
+      "delete_action": "Xóa {count} liên kết",
+      "delete_success": "Đã xóa {count} liên kết",
+      "delete_partial": "Đã xóa {success} liên kết; {failed} liên kết lỗi và vẫn được chọn.",
+      "delete_failed": "Không thể xóa {count} liên kết đã chọn."
+    }
   }
 }

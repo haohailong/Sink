@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { deleteStoredLinks, expectMaskedPassword, expectStoredHashedPassword, fetch, fetchWithAuth, getStoredLink, postJson, putJson, setLinkStoreD1Mode } from '../utils'
+import { deleteStoredLinks, expectMaskedPassword, expectStoredHashedPassword, fetch, fetchWithAuth, getD1Link, getStoredLink, postJson, putJson, setLinkStoreD1Mode } from '../utils'
 
 const createdSlugs = new Set<string>()
 
@@ -432,6 +432,90 @@ describe('/api/link/edit', { concurrent: false }, () => {
   it('returns 400 when slug is missing', async () => {
     const response = await putJson('/api/link/edit', { url: 'https://example.com' })
     expect(response.status).toBe(400)
+  })
+})
+
+describe('/api/link/bulk-edit', { concurrent: false }, () => {
+  it('updates only supported fields while preserving active and expired link settings', async () => {
+    const futureExpiration = Math.floor(Date.now() / 1000) + 3600
+    const expiredAt = Math.floor(Date.now() / 1000) - 60
+    const active = {
+      url: 'https://example.com/active',
+      slug: trackSlug(`bulk-active-${crypto.randomUUID()}`),
+      comment: 'Old comment',
+      description: 'Old description',
+      image: 'active-image',
+      password: 'active-secret',
+      tags: ['old'],
+    }
+    const expired = {
+      url: 'https://example.com/expired',
+      slug: trackSlug(`bulk-expired-${crypto.randomUUID()}`),
+      expiration: futureExpiration,
+      image: 'expired-image',
+      tags: ['old'],
+    }
+
+    expect((await postJson('/api/link/create', active)).status).toBe(201)
+    expect((await postJson('/api/link/create', expired)).status).toBe(201)
+    await env.DB.prepare('UPDATE links SET expiration = ?, effective_expires_at = ? WHERE slug = ?')
+      .bind(expiredAt, expiredAt, expired.slug)
+      .run()
+    await env.KV.delete(`link:${expired.slug}`)
+
+    const missingSlug = `bulk-missing-${crypto.randomUUID()}`
+    const response = await putJson('/api/link/bulk-edit', {
+      slugs: [active.slug, expired.slug, missingSlug],
+      changes: {
+        comment: 'Shared comment',
+        tags: ['New', 'new'],
+        title: 'Shared title',
+        description: null,
+      },
+    })
+    expect(response.status).toBe(200)
+
+    const data = await response.json() as {
+      links: { slug: string }[]
+      failed: { slug: string, error: string }[]
+    }
+    expect(new Set(data.links.map(link => link.slug))).toEqual(new Set([active.slug, expired.slug]))
+    expect(data.failed).toEqual([{ slug: missingSlug, error: 'not_found' }])
+
+    const activeStored = await (await fetchWithAuth(`/api/link/query?slug=${active.slug}`)).json() as Record<string, unknown>
+    const expiredStored = await (await fetchWithAuth(`/api/link/query?slug=${expired.slug}`)).json() as Record<string, unknown>
+    expect(activeStored).toMatchObject({
+      url: active.url,
+      comment: 'Shared comment',
+      tags: ['new'],
+      title: 'Shared title',
+      image: active.image,
+    })
+    expect(activeStored.description).toBeUndefined()
+    expect(activeStored.password).toBeDefined()
+    expect(expiredStored).toMatchObject({
+      url: expired.url,
+      comment: 'Shared comment',
+      tags: ['new'],
+      title: 'Shared title',
+      image: expired.image,
+      expiration: expiredAt,
+    })
+    expect((await getD1Link(expired.slug))?.expiration).toBe(expiredAt)
+  })
+
+  it('rejects unsupported or empty changes', async () => {
+    const payload = createLinkPayload()
+    expect((await postJson('/api/link/create', payload)).status).toBe(201)
+
+    expect((await putJson('/api/link/bulk-edit', {
+      slugs: [payload.slug],
+      changes: {},
+    })).status).toBe(400)
+    expect((await putJson('/api/link/bulk-edit', {
+      slugs: [payload.slug],
+      changes: { url: 'https://changed.example.com' },
+    })).status).toBe(400)
   })
 })
 

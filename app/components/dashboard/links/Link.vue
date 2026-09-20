@@ -8,6 +8,11 @@ import { toast } from 'vue-sonner'
 
 const props = defineProps<{
   link: DashboardLink
+  selected?: boolean
+}>()
+
+const emit = defineEmits<{
+  'update:selected': [value: boolean]
 }>()
 
 const { t, locale } = useI18n()
@@ -95,13 +100,25 @@ function copyLink() {
 </script>
 
 <template>
-  <Card size="sm" class="relative isolate h-full min-w-0">
+  <Card
+    size="sm"
+    class="relative isolate h-full min-w-0"
+    :class="{ 'ring-2 ring-primary': selected }"
+  >
     <CardContent
       class="flex h-full min-w-0 flex-1 flex-col gap-3"
     >
       <div
         class="flex min-w-0 items-start gap-2"
       >
+        <div class="relative z-20 flex min-h-9 shrink-0 items-center">
+          <Checkbox
+            :model-value="selected"
+            :aria-label="$t('links.bulk.select_link', { slug: link.slug })"
+            @update:model-value="emit('update:selected', $event === true)"
+            @click.stop
+          />
+        </div>
         <div
           class="group flex min-w-0 flex-1 cursor-pointer items-center gap-3"
         >
